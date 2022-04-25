@@ -19,6 +19,7 @@
   <meta name="theme-color" content="#ffffff">
   <script src="{% static 'js/base.js' %}"></script>
 </head>
+{% load string_filters %}
 <body>
   <nav class="navbar navbar-expand-lg navbar-dark">
     <a class="navbar-brand ms-2" href="#"><img src="{% static 'favicon-32x32.png' %}"/></a>
@@ -36,7 +37,7 @@
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 {% for item in list %}
-                  <a href="{% url 'index' option=item %}" class="dropdown-item" href="#">{{ item }}</a>
+                  <a href="{% url 'index' option=item|hyphenize|lower %}" class="dropdown-item" href="#">{{ item }}</a>
                 {% endfor %}
               </div>
             </li>

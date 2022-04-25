@@ -1,31 +1,31 @@
 {% extends "base_generic.html" %}
 
+{% load string_filters %}
 {% block content %}
-	<h1 class="text-center">{{ option }}</h1>
+	<h1 class="text-center">{{ option|unhyphenize|upper }}</h1>
 	<hr/>
 	<div class="d-flex text-center justify-content-between flex-wrap">
-		<div>
+		<div class="mx-auto">
 			<h3 class=""> Input </h3>
 			<hr/>
-			<form class="" action="{% url 'index' %}" method="post">
+			<form class="" action="{% url 'index' option=option%}" method="post">
 				{% csrf_token %}
 				{{ form }}
-				<input type="submit" class="btn btn-primary" value="Run">
+				<input onclick="document.getElementById('loading').innerText = 'Loading...'" type="submit" class="btn btn-primary" value="Run">
 			</form>
+			<div id="loading"></div>
 		</div>
-		<div class="mb-5">
+		<div class="mb-5 mx-auto">
 			<h3> Graph </h3>
 			<hr/>
 			{% if result.graph %}
 				<img src="data:image/gif;base64,{{ result.graph }}"/>
 			{% endif %}
 		</div>
-		<div class="">
+		<div class="mx-auto">
 			<h3>Output</h3>
 			<hr/>
-			<pre class="text-start w-100">{% if result.time_taken or result.time_taken == 0 %}Time taken: {{ result.time_taken }} {% endif %} {% if result.output %}
-Path: {{ result.output }}{% endif %}
-			</pre>
+			<pre class="text-start w-100">{{ result.output }}</pre>
 		</div>
 	</div>	
 {% endblock %}
