@@ -19,12 +19,14 @@ def get_algorithm(request, option='BFS'):
 		form = GraphForm(request.POST or None, initial={'graph': 'a:b'})
 		if form.is_valid():
 			graph = form.cleaned_data['graph']
-			adj_list = {}
-			for line in graph.split('\n'):
-				node, edges = line.strip().split(':')
-				adj_list[node] = edges.strip().split(',')
+		else:
+			graph = 'a:b'
+		adj_list = {}
+		for line in graph.split('\n'):
+			node, edges = line.strip().split(':')
+			adj_list[node] = edges.strip().split(',')
 
-			result = process_graph_algo(option, adj_list)
+		result = process_graph_algo(option, adj_list)
 
 	return render(request, 'index.html', {
 		'algorithms': algorithms, 
@@ -33,7 +35,3 @@ def get_algorithm(request, option='BFS'):
 		'form': form,
 		'result': result
 	})
-
-def result(request):
-	print('yo')
-	return JsonResponse({ "ajax": "yes" })

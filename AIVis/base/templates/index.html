@@ -1,15 +1,32 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-	<div class="container text-center">
-	<h1>{{ option }}</h1>
-	<form action="{% url 'index' %}" method="post">
-		{% csrf_token %}
-		{{ form }}
-		<input type="submit" class="btn btn-primary" value="Run">
-	</form>
-	<pre>{% if result.time_taken or result.time_taken == 0 %}Time taken: {{ result.time_taken }} {% endif %} {% if result.output %}Result: {{ result.output }}{% endif %}
-	</pre>
+	<h1 class="text-center">{{ option }}</h1>
+	<hr/>
+	<div class="d-flex text-center justify-content-between flex-wrap">
+		<div>
+			<h3 class=""> Input </h3>
+			<hr/>
+			<form class="" action="{% url 'index' %}" method="post">
+				{% csrf_token %}
+				{{ form }}
+				<input type="submit" class="btn btn-primary" value="Run">
+			</form>
+		</div>
+		<div class="mb-5">
+			<h3> Graph </h3>
+			<hr/>
+			{% if result.graph %}
+				<img src="data:image/gif;base64,{{ result.graph }}"/>
+			{% endif %}
+		</div>
+		<div class="">
+			<h3>Output</h3>
+			<hr/>
+			<pre class="text-start w-100">{% if result.time_taken or result.time_taken == 0 %}Time taken: {{ result.time_taken }} {% endif %} {% if result.output %}
+Path: {{ result.output }}{% endif %}
+			</pre>
+		</div>
 	</div>	
 {% endblock %}
 

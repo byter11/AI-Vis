@@ -1,5 +1,4 @@
 def bfs(adjList, start):
-  print(adjList)
   path = []
   q = [start]
 
